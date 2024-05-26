@@ -6,7 +6,7 @@ interface SquareProps {
   updateBoard?: any;
   index?: number;
   key?: number;
-  isSelected: boolean;
+  isSelected?: boolean;
 }
 
 const TURNS = {
@@ -14,21 +14,45 @@ const TURNS = {
   O: "o",
 };
 
-const Square: React.FC<SquareProps> = ({ children, isSelected }) => {
+const Square: React.FC<SquareProps> = ({
+  children,
+  isSelected,
+  updateBoard,
+}) => {
   const className = `square ${isSelected ? "is-selected" : ""}`;
 
-  return <div className={className}>{children}</div>;
+  const handleClick = () => {
+    updateBoard();
+  };
+
+  return (
+    <div onClick={handleClick} className={className}>
+      {children}
+    </div>
+  );
 };
 function App() {
   const [board, setBoard] = useState(Array(9).fill(null));
   const [turn, setTurn] = useState(TURNS.X);
+
+  const updateBoard = () => {
+    const newTurn = turn === TURNS.X ? TURNS.O : TURNS.X;
+    setTurn(newTurn);
+    //To update the state we call 'setTurn' and pass the new value
+  };
 
   return (
     <>
       <main className="board">
         <section className="game">
           {board.map((_, index) => {
-            return <Square key={index} index={index}></Square>;
+            return (
+              <Square
+                key={index}
+                index={index}
+                updateBoard={updateBoard}
+              ></Square>
+            );
           })}
         </section>
         <section className="turn">
