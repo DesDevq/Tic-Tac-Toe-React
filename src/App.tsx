@@ -18,11 +18,12 @@ const Square: React.FC<SquareProps> = ({
   children,
   isSelected,
   updateBoard,
+  index,
 }) => {
   const className = `square ${isSelected ? "is-selected" : ""}`;
 
   const handleClick = () => {
-    updateBoard();
+    updateBoard(index);
   };
 
   return (
@@ -35,7 +36,11 @@ function App() {
   const [board, setBoard] = useState(Array(9).fill(null));
   const [turn, setTurn] = useState(TURNS.X);
 
-  const updateBoard = () => {
+  const updateBoard = (index: number) => {
+    const newBoard = [...board];
+    newBoard[index] = turn; // X or O
+    setBoard(newBoard);
+
     const newTurn = turn === TURNS.X ? TURNS.O : TURNS.X;
     setTurn(newTurn);
     //To update the state we call 'setTurn' and pass the new value
@@ -47,11 +52,9 @@ function App() {
         <section className="game">
           {board.map((_, index) => {
             return (
-              <Square
-                key={index}
-                index={index}
-                updateBoard={updateBoard}
-              ></Square>
+              <Square key={index} index={index} updateBoard={updateBoard}>
+                {board[index]}
+              </Square>
             );
           })}
         </section>
