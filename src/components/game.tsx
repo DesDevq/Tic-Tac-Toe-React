@@ -80,6 +80,7 @@ export const Game = () => {
     const newWinner = checkWinner(newBoard);
     if (newWinner) {
       setWinner(newWinner);
+      //Check if game is over
     }
   };
 
@@ -99,6 +100,20 @@ export const Game = () => {
           <Square isSelected={turn === TURNS.X}>{TURNS.X}</Square>
           <Square isSelected={turn === TURNS.O}>{TURNS.O}</Square>
         </section>
+        {winner !== null && (
+          <section className="winner">
+            <div className="text">
+              <h2>{winner == false ? "DRAW" : "WON: "}</h2>
+
+              <header className="win">
+                {winner && <Square>{winner}</Square>}
+              </header>
+              <footer>
+                <button>New Round</button>
+              </footer>
+            </div>
+          </section>
+        )}
       </main>
     </>
   );
