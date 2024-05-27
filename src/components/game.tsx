@@ -64,6 +64,12 @@ export const Game = () => {
     }
     return null;
   };
+
+  const resetGame = () => {
+    setBoard(Array(9).fill(null));
+    setTurn(TURNS.X);
+    setWinner(null);
+  };
   const updateBoard = (index: number) => {
     if (board[index] || winner) return;
     // Don't update the position if it is something
@@ -87,6 +93,7 @@ export const Game = () => {
   return (
     <>
       <main className="board">
+        <button onClick={resetGame}>Reset Game</button>
         <section className="game">
           {board.map((_, index) => {
             return (
@@ -109,7 +116,7 @@ export const Game = () => {
                 {winner && <Square>{winner}</Square>}
               </header>
               <footer>
-                <button>New Round</button>
+                <button onClick={resetGame}>New Round</button>
               </footer>
             </div>
           </section>
