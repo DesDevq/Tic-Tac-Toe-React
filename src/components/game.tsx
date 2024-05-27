@@ -47,7 +47,7 @@ const WINNER_COMBOS = [
 export const Game = () => {
   const [board, setBoard] = useState(Array(9).fill(null));
   const [turn, setTurn] = useState(TURNS.X);
-  const [winner, setWinner] = useState(null);
+  const [winner, setWinner] = useState<boolean | null>(null);
   // null = not winner, false = draw
 
   const checkWinner = (boardToCheck: any) => {
@@ -65,6 +65,9 @@ export const Game = () => {
     return null;
   };
 
+  const checkEndGame = (newBoard: any) => {
+    return newBoard.every((index: number) => index !== null);
+  };
   const resetGame = () => {
     setBoard(Array(9).fill(null));
     setTurn(TURNS.X);
@@ -87,6 +90,8 @@ export const Game = () => {
     if (newWinner) {
       setWinner(newWinner);
       //Check if game is over
+    } else if (checkEndGame(newBoard)) {
+      setWinner(false); //DRAW
     }
   };
 
