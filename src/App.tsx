@@ -37,7 +37,10 @@ function App() {
   const [turn, setTurn] = useState(TURNS.X);
 
   const updateBoard = (index: number) => {
+    if (board[index]) return;
+    // Don't update the position if it is something
     const newBoard = [...board];
+    //Spread and rest operator
     newBoard[index] = turn; // X or O
     setBoard(newBoard);
 
